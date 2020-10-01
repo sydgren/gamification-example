@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\UserLeveledUp;
+use App\Listeners\RewardLevelUpAchievement;
+use App\Models\UserQuest;
+use App\Observers\UserQuestObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        UserLeveledUp::class => [
+            RewardLevelUpAchievement::class,
+        ]
     ];
 
     /**
@@ -27,6 +34,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        UserQuest::observe(UserQuestObserver::class);
     }
 }

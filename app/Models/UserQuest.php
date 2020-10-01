@@ -56,11 +56,6 @@ class UserQuest extends Model
 
     public function complete(): bool
     {
-        $this->fill(['completed_at' => now()])->save();
-        $this->user->addCoins($this->quest->reward_coins);
-        $this->user->addExperience($this->quest->reward_xp);
-        $this->user->save();
-
-        return true;
+        return $this->fill(['completed_at' => now()])->save();
     }
 }
