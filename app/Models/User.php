@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
     use HasApiTokens;
+    use HasRolesAndAbilities;
 
     /**
      * The attributes that are mass assignable.
