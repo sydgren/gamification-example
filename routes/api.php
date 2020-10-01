@@ -4,7 +4,9 @@ use App\Http\Controllers\AbandonQuestController;
 use App\Http\Controllers\BuyCoinsController;
 use App\Http\Controllers\CompleteQuestController;
 use App\Http\Controllers\CreateQuestController;
+use App\Http\Controllers\GiftCoinsController;
 use App\Http\Controllers\MeController;
+use App\Http\Controllers\QuestsController;
 use App\Http\Controllers\SpendCoinsController;
 use App\Http\Controllers\StartQuestController;
 use App\Http\Controllers\ValidateQuestController;
@@ -36,6 +38,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('spend-coins', SpendCoinsController::class);
     Route::post('buy-coins', BuyCoinsController::class);
 
+    Route::post('users/{user}/gift-coins', GiftCoinsController::class);
+
+    Route::get('quests', QuestsController::class);
     Route::post('quests', CreateQuestController::class);
 });
 
