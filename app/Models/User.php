@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Concerns\HasCoins;
 use App\Concerns\HasExperience;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -56,6 +57,11 @@ class User extends Authenticatable
     public function quests(): HasMany
     {
         return $this->hasMany(UserQuest::class);
+    }
+
+    public function achievements(): BelongsToMany
+    {
+        return $this->belongsToMany(Achievement::class, 'user_achievements');
     }
 
     public function startQuest(Quest $quest): UserQuest

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Achievement;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +14,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        if (! Achievement::whereName('Adventurer')->exists()) {
+            Achievement::create([
+                'name' => 'Adventurer',
+                'description' => 'Complete 20 quests',
+            ]);
+        }
+
+        if (! Achievement::whereName('Veteran')->exists()) {
+            Achievement::create([
+                'name' => 'Veteran',
+                'description' => 'Reach level 5',
+            ]);
+        }
     }
 }

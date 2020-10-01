@@ -17,7 +17,7 @@ class UserLeveledUp implements ShouldBroadcast
 
     public int $level;
 
-    private User $user;
+    public User $user;
 
     /**
      * Create a new event instance.

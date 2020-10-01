@@ -24,6 +24,7 @@ class UserResource extends JsonResource
             'coins' => (int) $this->coins,
             'quests' => UserQuestResource::collection($this->quests()->incomplete()->get()),
             'completed_quests' => UserQuestResource::collection($this->quests()->completed()->get()),
+            'achievements' => AchievementResource::collection($this->achievements()->withPivot('achieved_at')->get())
         ];
     }
 }
