@@ -4,6 +4,7 @@ use App\Http\Controllers\AbandonQuestController;
 use App\Http\Controllers\CompleteQuestController;
 use App\Http\Controllers\CreateQuestController;
 use App\Http\Controllers\MeController;
+use App\Http\Controllers\SpendCoinsController;
 use App\Http\Controllers\StartQuestController;
 use App\Http\Controllers\ValidateQuestController;
 use Illuminate\Http\Request;
@@ -30,6 +31,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('quests/{quest}/abandon', AbandonQuestController::class);
     Route::post('quests/{quest}/validate', ValidateQuestController::class);
     Route::post('quests/{quest}/complete', CompleteQuestController::class);
+
+    Route::post('spend-coins', SpendCoinsController::class);
 
     Route::post('quests', CreateQuestController::class);
 });
