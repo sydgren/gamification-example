@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AbandonQuestController;
+use App\Http\Controllers\BuyCoinsController;
 use App\Http\Controllers\CompleteQuestController;
 use App\Http\Controllers\CreateQuestController;
 use App\Http\Controllers\MeController;
@@ -33,6 +34,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('quests/{quest}/complete', CompleteQuestController::class);
 
     Route::post('spend-coins', SpendCoinsController::class);
+    Route::post('buy-coins', BuyCoinsController::class);
 
     Route::post('quests', CreateQuestController::class);
 });
