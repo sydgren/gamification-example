@@ -18,6 +18,10 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'experience' => (int) $this->experience,
+            'experience_to_level_up' => (int) $this->getExperienceToLevelUp(),
+            'level' => $this->getLevel(),
+            'coins' => (int) $this->coins,
         ];
     }
 }
