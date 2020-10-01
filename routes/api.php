@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\AbandonQuestController;
+use App\Http\Controllers\CompleteQuestController;
+use App\Http\Controllers\CreateQuestController;
 use App\Http\Controllers\MeController;
+use App\Http\Controllers\StartQuestController;
+use App\Http\Controllers\ValidateQuestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,5 +26,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('auth:api')->group(function () {
     Route::get('me', MeController::class);
+    Route::post('quests/{quest}/start', StartQuestController::class);
+    Route::post('quests/{quest}/abandon', AbandonQuestController::class);
+    Route::post('quests/{quest}/validate', ValidateQuestController::class);
+    Route::post('quests/{quest}/complete', CompleteQuestController::class);
+
+    Route::post('quests', CreateQuestController::class);
 });
 

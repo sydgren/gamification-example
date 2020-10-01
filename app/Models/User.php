@@ -4,8 +4,8 @@ namespace App\Models;
 
 use App\Concerns\HasCoins;
 use App\Concerns\HasExperience;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -53,12 +53,60 @@ class User extends Authenticatable
         'experience' => 'int',
     ];
 
-    public function giftCoins(User $recipient, int $coins)
+    public function quests(): HasMany
     {
-        $this->subtractCoins($coins);
-        $recipient->addCoins($coins);
+        return $this->hasMany(UserQuest::class);
+    }
 
-        $this->save();
-        $recipient->save();
+    public function startQuest(Quest $quest): UserQuest
+    {
+        $userQuest = $this->quests()->make(['started_at' => now()]);
+        $userQuest->quest()->associate($quest);
+        $userQuest->saveOrFail();
+
+        $quest->objectives->each(
+            fn ($objective) => $userQuest->objectives()
+                ->make()
+                ->objective()->associate($objective)
+                ->saveOrFail()
+        );
+
+        return $userQuest;
+    }
+
+    public function getQuest(Quest $quest): UserQuest
+    {
+        return $this->quests()
+            ->whereQuestId($quest->getKey())
+            ->first();
+    }
+
+    public function abandonQuest(Quest $quest): self
+    {
+        $this->quests()
+            ->whereQuestId($quest->getKey())
+            ->delete();
+
+        return $this;
+    }
+
+    public function completeQuest(Quest $quest): bool
+    {
+        $userQuest = $this->getQuest($quest);
+
+        return $userQuest->complete();
+    }
+
+    public function canCompleteQuest(Quest $quest): bool
+    {
+        return $this->getQuest($quest)
+            ->canComplete();
+    }
+
+    public function isOnQuest(Quest $quest): bool
+    {
+        return $this->quests()
+            ->whereQuestId($quest->getKey())
+            ->exists();
     }
 }
