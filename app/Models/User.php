@@ -115,4 +115,12 @@ class User extends Authenticatable
             ->whereQuestId($quest->getKey())
             ->exists();
     }
+
+    public function sendCoinsTo(User $user, int $amount): self
+    {
+        $this->subtractCoins($amount)->save();
+        $user->addCoins($amount)->save();
+
+        return $this;
+    }
 }
